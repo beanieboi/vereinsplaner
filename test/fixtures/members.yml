@@ -1,0 +1,50 @@
+ben:
+  id: 1
+  first_name: "Ben"
+  last_name: "Fritsch"
+  date_of_birth: <%= Date.parse("1984/10/02") %>
+  street: "Kurt-Eisner-Str"
+  street_number: "23A"
+  postal_code: "04275"
+  city: "Leipzig"
+  country: "Deutschland"
+  contact_email: "beanie@benle.de"
+  contact_phone: "017620030295"
+  member_since: <%= Date.today %>
+  membership_fee: 4500
+  membership_type: "full"
+  application_form_present: true
+
+nie_zahler:
+  id: 2
+  first_name: "Nie"
+  last_name: "Gezahlt"
+  date_of_birth: <%= Date.parse("1955/5/5") %>
+  street: "Nie-Zahl-Str."
+  street_number: "1"
+  postal_code: "04275"
+  city: "Leipzig"
+  country: "Deutschland"
+  contact_email: "nie@zahlen.de"
+  contact_phone: ""
+  member_since: <%= Date.today %>
+  membership_fee: 4500
+  membership_type: "full"
+  application_form_present: true
+
+old:
+  id: 3
+  first_name: "Immer"
+  last_name: "Dabei"
+  date_of_birth: <%= Date.parse("1955/5/5") %>
+  street: "Nie-Zahl-Str."
+  street_number: "1"
+  postal_code: "04275"
+  city: "Leipzig"
+  country: "Deutschland"
+  contact_email: "nie@zahlen.de"
+  contact_phone: ""
+  member_since: <%= 500.days.ago.to_date %>
+  membership_fee: 4500
+  membership_type: "full"
+  application_form_present: true

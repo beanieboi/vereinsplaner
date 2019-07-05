@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row justify-content-center">
+
+    <div class="col-md-12 col-lg-8">
+      <% if @payment.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            Folgende Fehler sind aufgetreten: <%= pluralize(@payment.errors.count, "error") %>.
+          </div>
+          <ul>
+          <% @payment.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= form_for(@payment) do |f| %>
+        <div class="form-group row">
+          <label for="member" class="col-sm-2 col-lg-4 col-form-label">Mitglied</label>
+          <div class="col-sm-10 col-lg-6">
+            <%= f.collection_select :member_id, Member.all, :id, :name, prompt: true, class: "form-control" %>
+          </div>
+          <label for="partner_name" class="col-sm-2 col-lg-4 col-form-label">Betrag</label>
+          <div class="col-sm-10 col-lg-6">
+            <%= f.text_field :amount, class: "form-control" %>
+          </div>
+          <label for="partner_name" class="col-sm-2 col-lg-4 col-form-label">Gezahlt am</label>
+          <div class="col-sm-10 col-lg-6">
+            <%= f.date_field :payed_at, class: "form-control" %>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      <% end %>
+    </div>
+  </div>
+</div>

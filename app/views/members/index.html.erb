@@ -1,0 +1,14 @@
+<h2>Miglieder</h2><%= link_to("neues Mitglied", new_member_path) %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Vorname</th>
+      <th scope="col">Nachname</th>
+      <th scope="col">letzte Zahlung</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @members %>
+  </tbody>
+</table>

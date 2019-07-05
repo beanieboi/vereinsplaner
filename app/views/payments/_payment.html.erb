@@ -1,0 +1,7 @@
+<tr>
+  <td><%= payment.member.first_name %></td>
+  <td><%= payment.member.last_name %></td>
+  <td><%= payment.amount %></td>
+  <td><%= payment.payed_at %></td>
+  <td><%= link_to(fa_icon("trash"), payment_path(payment), method: :delete)  %></td>
+</tr>

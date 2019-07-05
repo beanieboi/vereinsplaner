@@ -1,0 +1,68 @@
+@import "bootstrap";
+@import "font-awesome";
+
+header {
+  padding: 60px 0 40px;
+}
+
+@media (min-width: 992px) {
+  header {
+    padding: 60px 0 40px;
+  }
+}
+
+section {
+  padding: 25px 0;
+}
+
+a:link, a:hover, a:visited {
+  color: #004e70;
+}
+
+.nav-item a {
+  padding-left: 10px;
+}
+
+.tfc-logo {
+  float: left;
+  padding-right: 40px;
+}
+
+@media (max-width: 992px) {
+  .tfc-logo {
+    float:none;
+  }
+}
+
+.tfc-title {
+  font-size: 60px;
+  text-transform: uppercase;
+  font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans-serif;
+}
+
+@media (max-width: 992px) {
+  .tfc-title {
+    font-size: 40px;
+  }
+}
+
+.tfc-subtitle {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+@media (max-width: 992px) {
+  .tfc-subtitle {
+    font-size: 15px;
+  }
+}
+
+.bg-tfc-color {
+  background-color: #004e70;
+}
+
+.logos img {
+  box-sizing: border-box;
+  padding: 5px;
+}

@@ -1,0 +1,13 @@
+<h2>Zahlungen</h2><%= link_to("neue Zahlung", new_payment_path) %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @payments %>
+  </tbody>
+</table>
