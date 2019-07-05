@@ -5,7 +5,8 @@ ruby '2.6.3'
 
 gem 'rails', '~> 6.0.0.rc1'
 gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '~> 3.11'
+gem 'puma'
+gem 'barnes'
 
 gem 'acts-as-taggable-array-on'
 
@@ -17,7 +18,7 @@ gem 'webpacker', '~> 4.0'
 gem 'font-awesome-rails'
 
 gem 'jbuilder', '~> 2.5'
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
