@@ -32,6 +32,10 @@ class MembersController < ApplicationController
   def update
     @member = Member.find(params[:id])
 
+    unless member_params.key?(:tags)
+      @member.tags = []
+    end
+
     if @member.update(member_params)
       redirect_to(
         members_path,
