@@ -1,7 +1,56 @@
 <div class="container">
   <div class="row">
     <div class="mt-4 px-3 pt-4 pb-5">
-      <h2>Hello</h2>
+      <h2>Mitgliedsdaten</h2>
     </div>
   </div>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td>aktive Mitglieder</td>
+        <td><%= Member.where(membership_type: MembershipType.full.id).count %></td>
+      </tr>
+      <tr>
+        <td>ermäßigte Mitglieder</td>
+        <td><%= Member.where(membership_type: MembershipType.discounted.id).count %></td>
+      </tr>
+      <tr>
+        <td>passive Mitglieder</td>
+        <td><%= Member.where(membership_type: MembershipType.passive.id).count %></td>
+      </tr>
+      <tr>
+        <td>Fördermitglieder</td>
+        <td><%= Member.where(membership_type: MembershipType.support.id).count %></td>
+      </tr>
+    </tbody>
+  </table>
+    <div class="row">
+    <div class="mt-4 px-3 pt-4 pb-5">
+      <h2>Vereinsdaten</h2>
+    </div>
+  </div>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td>Vereinsnummer</td>
+        <td>noch nicht bekannt</td>
+      </tr>
+      <tr>
+        <td>Gründungsdatum</td>
+        <td>24.04.2019</td>
+      </tr>
+      <tr>
+        <td>Bankverbindung</td>
+        <td>IBAN: XXXXX Bank: XXXXX</td>
+      </tr>
+      <tr>
+        <td>Steuernummer</td>
+        <td>231 / 140 / 32166</td>
+      </tr>
+      <tr>
+        <td>Finanzamt</td>
+        <td>Finanzamt Leipzig II</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
