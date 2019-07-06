@@ -3,5 +3,5 @@
   <td><%= document.tags.to_sentence %></td>
   <td><%= document.created_at %></td>
   <td><%= link_to(fa_icon("download"), url_for(document.file)) %></td>
-  <td><%= link_to(fa_icon("trash"), document_path(document), method: :delete)  %></td>
+  <td><%= link_to(fa_icon("trash"), document_path(document), method: :delete, data: { confirm: 'Willst du das Dokument wirklich löschen?' } ) %></td>
 </tr>

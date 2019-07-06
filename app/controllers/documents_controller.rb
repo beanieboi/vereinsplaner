@@ -17,7 +17,7 @@ class DocumentsController < ApplicationController
     if @document.save
       redirect_to(
         documents_path,
-        flash: { notice: 'Document erfolgreich hinzugefügt' }
+        flash: { notice: 'Dokument erfolgreich hinzugefügt' }
       )
     else
       render 'new'
@@ -39,7 +39,8 @@ class DocumentsController < ApplicationController
     params.require(
       :document
     ).permit(
-      :file
+      :file,
+      :tags => [],
     )
   end
 end
