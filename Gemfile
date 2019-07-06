@@ -10,6 +10,8 @@ gem 'barnes'
 
 gem 'acts-as-taggable-array-on'
 gem 'activestorage-database-service', github: 'TitovDigital/activestorage-database-service'
+gem 'paper_trail'
+gem 'rails_admin', '~> 2.0.0.beta'
 
 gem 'pundit' # Authorization Library https://github.com/elabs/pundit
 
