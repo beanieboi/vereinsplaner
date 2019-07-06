@@ -5,6 +5,11 @@ class MembersController < ApplicationController
 
   def new
     @member = Member.new
+    # set some defaults
+    @member.membership_fee_in_euro = 45
+    @member.member_since = Date.today
+    @member.member_since = Date.today
+    @member.membership_type = MembershipType.full.id
   end
 
   def edit
