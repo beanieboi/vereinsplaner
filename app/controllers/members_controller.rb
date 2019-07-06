@@ -9,7 +9,7 @@ class MembersController < ApplicationController
     @member.membership_fee_in_euro = 45
     @member.member_since = Date.today
     @member.member_since = Date.today
-    @member.membership_type = MembershipType.full.id
+    @member.membership_type = MembershipType.full.first
   end
 
   def edit
