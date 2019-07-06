@@ -10,7 +10,6 @@ class DocumentsController < ApplicationController
   def create
     @document = Document.new(document_params)
 
-    binding.pry
     if @document.save
       redirect_to(
         documents_path,
