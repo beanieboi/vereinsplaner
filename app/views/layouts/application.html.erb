@@ -43,7 +43,14 @@
       </div>
     </header>
 
-    <div class="main-content pb-5"><%= yield %></div>
+    <div class="main-content pb-5">
+      <% flash.each do |key, value| %>
+        <div class="container mt-4">
+          <div class="alert alert-<%= key %>"><%= value %></div>
+        </div>
+      <% end %>
+      <%= yield %>
+    </div>
 
     <footer class="py-5 bg-dark">
       <div class="container">
