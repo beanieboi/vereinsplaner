@@ -9,6 +9,7 @@ gem 'puma'
 gem 'barnes'
 
 gem 'acts-as-taggable-array-on'
+gem 'activestorage-database-service', github: 'TitovDigital/activestorage-database-service'
 
 gem 'pundit' # Authorization Library https://github.com/elabs/pundit
 

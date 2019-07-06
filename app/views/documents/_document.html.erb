@@ -1,0 +1,6 @@
+<tr>
+  <td><%= document.file.filename %></td>
+  <td><%= document.tags.to_sentence %></td>
+  <td><%= document.created_at %></td>
+  <td><%= link_to(fa_icon("download"), url_for(document.file)) %></td>
+</tr>

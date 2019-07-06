@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/TitovDigital/activestorage-database-service.git
+  revision: cf855b5f6ef59f15d05bebc5b1ffcfb92affe71e
+  specs:
+    activestorage-database-service (0.1.0)
+      rails (>= 5.2.1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -234,6 +241,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activestorage-database-service!
   acts-as-taggable-array-on
   barnes
   bcrypt
