@@ -15,11 +15,16 @@
         </div>
       <% end %>
       <%= form_for(@document) do |f| %>
-        <div class="form-group row">
-          <label for="member" class="col-sm-2 col-lg-4 col-form-label">Datei</label>
-          <div class="col-sm-10 col-lg-6">
-            <%= f.file_field :file %>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+          </div>
+          <div class="custom-file">
+            <%= f.file_field :file, {class: "custom-file-input", "aria-describedby": "inputGroupFileAddon01"} %>
+            <label class="custom-file-label" for="inputGroupFile01">Datei auswählen</label>
+          </div>
         </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
       <% end %>
     </div>
