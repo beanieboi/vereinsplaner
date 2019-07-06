@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   def index
-    @members = Member.all
+    @members = Member.order(:last_name).order(:first_name).all
   end
 
   def new
