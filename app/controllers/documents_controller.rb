@@ -24,6 +24,15 @@ class DocumentsController < ApplicationController
     end
   end
 
+  def destroy
+    @document = Document.find(params[:id])
+    if @document.destroy
+      redirect_to documents_path, notice: 'Dokument erfolgreich gelöscht.'
+    else
+      redirect_to documents_path, notice: 'Dokument konnte nicht gelöscht werden.'
+    end
+  end
+
   private
 
   def document_params
