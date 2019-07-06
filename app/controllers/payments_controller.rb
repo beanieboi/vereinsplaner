@@ -5,6 +5,7 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
+    @payment.payed_at = Date.today
   end
 
   def create
