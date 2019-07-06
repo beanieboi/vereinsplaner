@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" type="image/png" href="<%= asset_url 'favicon.png' %>">
+
     <title>Vereinsplaner</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
-    <%= asset_url 'favicon.png' %>
   </head>
 
   <body id="page-top">
@@ -37,17 +38,13 @@
     <header class="bg-tfc-color text-white">
       <div class="container">
         <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <div class="tfc-subtitle">TFC Vereinsplaner</div>
-          <div>
-        <div>
+          <div class="tfc-subtitle">TFC Vereinsplaner</div>
+        </div>
       </div>
     </header>
 
-    <%= yield %>
+    <div class="main-content pb-5"><%= yield %></div>
 
-    <footer class="py-5 bg-white">
-    </footer>
     <footer class="py-5 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; 1. TFC Leipzig 2018</p>

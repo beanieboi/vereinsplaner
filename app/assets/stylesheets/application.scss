@@ -15,7 +15,9 @@ section {
   padding: 25px 0;
 }
 
-a:link, a:hover, a:visited {
+a:link,
+a:hover,
+a:visited {
   color: #004e70;
 }
 
@@ -30,14 +32,15 @@ a:link, a:hover, a:visited {
 
 @media (max-width: 992px) {
   .tfc-logo {
-    float:none;
+    float: none;
   }
 }
 
 .tfc-title {
   font-size: 60px;
   text-transform: uppercase;
-  font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans-serif;
+  font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal,
+    "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans-serif;
 }
 
 @media (max-width: 992px) {
@@ -49,7 +52,8 @@ a:link, a:hover, a:visited {
 .tfc-subtitle {
   font-size: 20px;
   text-transform: uppercase;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+    Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 @media (max-width: 992px) {
@@ -65,4 +69,8 @@ a:link, a:hover, a:visited {
 .logos img {
   box-sizing: border-box;
   padding: 5px;
+}
+
+.main-content {
+  min-height: calc(100vh - 130px - 120px);
 }
