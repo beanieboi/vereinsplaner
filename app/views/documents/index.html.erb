@@ -1,0 +1,14 @@
+<h2>Dokumente</h2><%= link_to("neues Dokument", new_document_path) %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Tags</th>
+      <th scope="col">Erstellt am</th>
+      <th scope="col">Download</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @documents %>
+  </tbody>
+</table>
