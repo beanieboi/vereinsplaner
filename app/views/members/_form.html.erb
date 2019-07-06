@@ -100,9 +100,9 @@
           </div>
         </div>
 
-        <% Member.all_tags.each do |tag| %>
-          <% checked = member.tags.include?(tag) %>
-          <%= check_box_tag 'member[tags][]', tag, checked %><%= tag %>
+        <% Tag.where(object: 'Member').all.each do |tag| %>
+          <% checked = member.tags.include?(tag.name) %>
+          <%= check_box_tag 'member[tags][]', tag.name, checked %><%= tag.name %>
         <% end %>
 
         <div class="form-group row">
