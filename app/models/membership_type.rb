@@ -1,38 +1,23 @@
-class MembershipType
-  attr_reader :id, :name
-
-  def initialize(id, name)
-    @id = id
-    @name = name
-  end
-
-  def self.all
-    [
-      full,
-      discounted,
-      passive,
-      support,
-      unknown
-    ]
-  end
+class MembershipType < ApplicationRecord
+  has_many :members
 
   def self.full
-    MembershipType.new("full", "Aktive Mitgliedschaft")
+    where(short: :full)
   end
 
   def self.discounted
-    MembershipType.new("discounted", "ermäßigte Mitgliedschaft")
+    where(short: :discounted)
   end
 
   def self.passive
-    MembershipType.new("passive", "Passive Mitgliedschaft")
+    where(short: :passive)
   end
 
   def self.support
-    MembershipType.new("support", "Fördermitgliedschaft")
+    where(short: :support)
   end
 
   def self.unknown
-    MembershipType.new("unknown", "Unbekannt")
+    where(short: :unknown)
   end
 end

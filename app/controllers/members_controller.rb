@@ -69,7 +69,7 @@ class MembersController < ApplicationController
       :contact_email,
       :contact_phone,
       :membership_fee_in_euro,
-      :membership_type,
+      :membership_type_id,
       :member_since,
       :application_form_present,
       :comment,

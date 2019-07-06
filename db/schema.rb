@@ -64,14 +64,21 @@ ActiveRecord::Schema.define(version: 2019_07_06_201254) do
     t.text "contact_email"
     t.text "contact_phone"
     t.integer "membership_fee", null: false
-    t.text "membership_type", null: false
     t.date "member_since", null: false
     t.boolean "application_form_present", null: false
     t.text "comment"
     t.string "tags", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "membership_type_id", default: 0, null: false
     t.index ["tags"], name: "index_members_on_tags", using: :gin
+  end
+
+  create_table "membership_types", force: :cascade do |t|
+    t.text "short"
+    t.text "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "payments", force: :cascade do |t|

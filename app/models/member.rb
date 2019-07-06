@@ -1,6 +1,7 @@
 class Member < ApplicationRecord
   acts_as_taggable_array_on :tags
 
+  belongs_to :membership_type
   has_many :payments
 
   def membership_fee_in_euro

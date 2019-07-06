@@ -8,19 +8,19 @@
     <tbody>
       <tr>
         <td>aktive Mitglieder</td>
-        <td><%= Member.where(membership_type: MembershipType.full.id).count %></td>
+        <td><%= MembershipType.full.first.members.count %></td>
       </tr>
       <tr>
         <td>ermäßigte Mitglieder</td>
-        <td><%= Member.where(membership_type: MembershipType.discounted.id).count %></td>
+        <td><%= MembershipType.discounted.first.members.count %></td>
       </tr>
       <tr>
         <td>passive Mitglieder</td>
-        <td><%= Member.where(membership_type: MembershipType.passive.id).count %></td>
+        <td><%= MembershipType.passive.first.members.count %></td>
       </tr>
       <tr>
         <td>Fördermitglieder</td>
-        <td><%= Member.where(membership_type: MembershipType.support.id).count %></td>
+        <td><%= MembershipType.support.first.members.count %></td>
       </tr>
     </tbody>
   </table>
