@@ -1,8 +1,8 @@
 GIT
-  remote: https://github.com/TitovDigital/activestorage-database-service.git
-  revision: cf855b5f6ef59f15d05bebc5b1ffcfb92affe71e
+  remote: https://github.com/markaschneider/activestorage-database-service.git
+  revision: 71cb937e03f1757dc8030aec29239b7fc358da6d
   specs:
-    activestorage-database-service (0.1.0)
+    activestorage-database-service (1.0.0)
       rails (>= 5.2.1.1)
 
 GEM

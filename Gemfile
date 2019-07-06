@@ -9,7 +9,7 @@ gem 'puma'
 gem 'barnes'
 
 gem 'acts-as-taggable-array-on'
-gem 'activestorage-database-service', github: 'TitovDigital/activestorage-database-service'
+gem 'activestorage-database-service', github: 'markaschneider/activestorage-database-service'
 gem 'paper_trail'
 gem 'rails_admin', '~> 2.0.0.beta'
 
