@@ -101,7 +101,8 @@
         </div>
 
         <% Member.all_tags.each do |tag| %>
-          <%= check_box_tag tag, tag %><%= tag %>
+          <% checked = member.tags.include?(tag) %>
+          <%= check_box_tag 'member[tags][]', tag, checked %><%= tag %>
         <% end %>
 
         <div class="form-group row">

@@ -69,6 +69,7 @@ class MembersController < ApplicationController
       :member_since,
       :application_form_present,
       :comment,
+      :tags => [],
     )
   end
 end
