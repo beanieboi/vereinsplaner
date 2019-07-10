@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :members
   resources :payments, except: [:edit]
   resources :sessions, only: [:new, :create]
+  delete '/signout', to: "sessions#destroy", as: :signout
 
   root to: "dashboards#show"
 end
