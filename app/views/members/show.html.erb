@@ -1,0 +1,71 @@
+<div class="container member-show">
+  <div class="row">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-8 mt-4 px-3 pt-4 pb-5">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td><%= @member.first_name %> <%= @member.last_name %></td>
+          </tr>
+          <tr>
+            <td>Mitgliedschaft</td>
+            <td><%= @member.membership_type.name %></td>
+          </tr>
+          <tr>
+            <td>Mitglied seit</td>
+            <td><%= @member.member_since %></td>
+          </tr>
+          <tr>
+            <td>Geburtstag</td>
+            <td><%= @member.date_of_birth %> (Alter: <%= @member.age %>)</td>
+          </tr>
+          <tr>
+            <td>Anschrift</td>
+            <td><%= @member.street %> <%= @member.street_number %>, <%= @member.postal_code %> <%= @member.city %>, <%= @member.country %></td>
+          </tr>
+          <tr>
+            <td>E-Mail</td>
+            <td><%= @member.contact_email %></td>
+          </tr>
+          <tr>
+            <td>Telefon</td>
+            <td><%= @member.contact_phone %></td>
+          </tr>
+          <tr>
+            <td>Geburtstag</td>
+            <td><%= @member.date_of_birth %> (Alter: <%= @member.age %>)</td>
+          </tr>
+          <tr>
+            <td>Mitgliedsantrag</td>
+            <td><%= link_to(fa_icon("download"), url_for(@member.application_form)) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-8 mt-4 px-3 pt-4 pb-5">
+      <h2>gezahlte Mitgliedbeiträge</h2>
+      <table class="table">
+        <thead>
+            <tr>
+              <th scope="col">Datum</th>
+              <th scope="col">Betrag</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @member.payments.each do |payment| %>
+            <tr>
+              <td><%= payment.payed_at %></td>
+              <td><%= payment.amount %> Euro</td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>

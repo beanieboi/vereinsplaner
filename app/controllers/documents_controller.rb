@@ -1,8 +1,4 @@
 class DocumentsController < ApplicationController
-  def paper_trail_enabled_for_controller
-    super && false
-  end
-
   def index
     @documents = Document.all
   end

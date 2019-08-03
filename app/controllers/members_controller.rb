@@ -16,6 +16,10 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
   end
 
+  def show
+    @member = Member.find(params[:id])
+  end
+
   def create
     @member = Member.new(member_params)
 
@@ -71,7 +75,7 @@ class MembersController < ApplicationController
       :membership_fee_in_euro,
       :membership_type_id,
       :member_since,
-      :application_form_present,
+      :application_form,
       :comment,
       :tags => [],
     )
