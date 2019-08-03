@@ -39,7 +39,11 @@
           </tr>
           <tr>
             <td>Mitgliedsantrag</td>
-            <td><%= link_to(fa_icon("download"), url_for(@member.application_form)) %></td>
+            <% if @member.application_form.present? %>
+              <td><%= link_to(fa_icon("download"), url_for(@member.application_form)) %></td>
+            <% else %>
+              <td>Nicht vorhanden</td>
+            <% end %>
           </tr>
         </tbody>
       </table>
