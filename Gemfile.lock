@@ -304,7 +304,7 @@ DEPENDENCIES
   puma
   pundit
   rails (~> 6.0.0)
-  rails_admin (~> 2.0.0.beta)
+  rails_admin (~> 2.0.0)
   sass-rails (~> 5)
   selenium-webdriver
   simplecov
