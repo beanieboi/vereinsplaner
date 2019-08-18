@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_06_202959) do
+ActiveRecord::Schema.define(version: 2019_08_18_103437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 2019_07_06_202959) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "membership_type_id", default: 0, null: false
+    t.text "gender", default: "undisclosed", null: false
     t.index ["tags"], name: "index_members_on_tags", using: :gin
   end
 

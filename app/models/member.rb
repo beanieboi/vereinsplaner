@@ -1,10 +1,14 @@
 class Member < ApplicationRecord
+  GENDER = ["male", "female", "undisclosed"]
+
   has_one_attached :application_form
   has_paper_trail skip: :application_form
   acts_as_taggable_array_on :tags
 
   belongs_to :membership_type
   has_many :payments
+
+  validates :gender, inclusion: { in: GENDER }
 
   def membership_fee_in_euro
     return if membership_fee.nil?

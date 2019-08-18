@@ -65,6 +65,7 @@ class MembersController < ApplicationController
       :first_name,
       :last_name,
       :date_of_birth,
+      :gender,
       :street,
       :street_number,
       :postal_code,
