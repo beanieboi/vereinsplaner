@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
 
-gem 'rails', '~> 6.0.0.rc2'
+gem 'rails', '~> 6.0.0'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma'
 gem 'barnes'
@@ -11,7 +11,7 @@ gem 'barnes'
 gem 'acts-as-taggable-array-on'
 gem 'activestorage-database-service', github: 'markaschneider/activestorage-database-service'
 gem 'paper_trail'
-gem 'rails_admin', '~> 2.0.0.beta'
+gem 'rails_admin', '~> 2.0.0'
 
 gem 'pundit' # Authorization Library https://github.com/elabs/pundit
 
