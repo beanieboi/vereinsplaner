@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="mt-4 px-3 pt-4 pb-5">
+      <h2>Mitgliederstatistik für den Landessportbund (LSB)</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="mt-4 px-3 pt-4 pb-5">
+  <% if @members_without_birthdate.any? %>
+    Achtung folgende Mitglieder haben kein eingetragenes Geburtsdatum:
+    <%= @members_without_birthdate.collect(&:name).to_sentence %>
+  <% end %>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Geburtsjahr</th>
+        <th scope="col">Nännlich</th>
+        <th scope="col">Weiblich</th>
+        <th scope="col">Gesamt</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @statistics.member_distribution_for_lsb.each do |lsb_entry| %>
+      <tr>
+        <td><%= lsb_entry.year %></td>
+        <td><%= lsb_entry.male_count %></td>
+        <td><%= lsb_entry.female_count %></td>
+        <td><%= lsb_entry.total %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
