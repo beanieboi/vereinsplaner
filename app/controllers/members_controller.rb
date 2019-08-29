@@ -79,6 +79,7 @@ class MembersController < ApplicationController
       :application_form,
       :sepa_mandate,
       :comment,
+      :member_id,
       :tags => [],
     )
   end

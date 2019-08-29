@@ -16,6 +16,16 @@
       <% end %>
       <%= form_for(@member) do |f| %>
         <div class="form-group row">
+          <label for="partner_name" class="col-sm-2 col-lg-4 col-form-label">Mitgliedsnummer</label>
+          <div class="col-sm-10 col-lg-6">
+            <% if @member.new_record? %>
+              <%= f.text_field :member_id, value: Member.next_member_id, class: "form-control" %>
+            <% else %>
+              <%= f.text_field :member_id, class: "form-control" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="form-group row">
           <label for="partner_name" class="col-sm-2 col-lg-4 col-form-label">Vorname</label>
           <div class="col-sm-10 col-lg-6">
             <%= f.text_field :first_name, class: "form-control" %>

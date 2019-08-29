@@ -51,4 +51,7 @@ class Member < ApplicationRecord
     self.gender == "female"
   end
 
+  def self.next_member_id
+    Member.maximum(:member_id) + 1
+  end
 end
