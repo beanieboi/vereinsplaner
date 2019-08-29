@@ -12,7 +12,8 @@ ben:
   contact_phone: "017620030295"
   member_since: <%= Date.today %>
   membership_fee: 4500
-  membership_type: "full"
+  membership_type_id: 5
+  sepa_mandate: true
   application_form_present: true
 
 nie_zahler:
@@ -29,7 +30,7 @@ nie_zahler:
   contact_phone: ""
   member_since: <%= Date.today %>
   membership_fee: 4500
-  membership_type: "full"
+  membership_type_id: 5
   application_form_present: true
 
 old:
@@ -46,5 +47,5 @@ old:
   contact_phone: ""
   member_since: <%= 500.days.ago.to_date %>
   membership_fee: 4500
-  membership_type: "full"
+  membership_type_id: 5
   application_form_present: true
