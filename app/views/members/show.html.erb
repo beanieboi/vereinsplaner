@@ -34,10 +34,6 @@
             <td><%= @member.contact_phone %></td>
           </tr>
           <tr>
-            <td>Kommentar</td>
-            <td><%= @member.comment %></td>
-          </tr>
-          <tr>
             <td>Mitgliedsantrag</td>
             <% if @member.application_form.present? %>
               <td><%= link_to(fa_icon("download"), url_for(@member.application_form)) %></td>
@@ -45,10 +41,19 @@
               <td>Nicht vorhanden</td>
             <% end %>
           </tr>
+          <tr>
+            <td>Lastschrifteinzug</td>
+            <td><%= bool_to_check_mark(@member.sepa_mandate) %></td>
+          </tr>
+          <tr>
+            <td>Kommentar</td>
+            <td><%= @member.comment %></td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
+  <% if @member.sepa_mandate == false %>
   <div class="row">
     <div class="col-lg-2">
     </div>
@@ -72,4 +77,5 @@
         </table>
     </div>
   </div>
+  <% end %>
 </div>
