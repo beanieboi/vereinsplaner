@@ -2,6 +2,11 @@
   <td><%= member.first_name %></td>
   <td><%= member.last_name %></td>
   <td><%= member.tags.to_sentence %></td>
+  <% if member.application_form.present? %>
+    <td>vorhanden</td>
+  <% else %>
+    <td>Nicht vorhanden</td>
+  <% end %>
   <td><%= last_payment_for_table(member) %></td>
   <td><%= link_to(fa_icon("edit"), edit_member_path(member)) %></td>
   <td><%= link_to(fa_icon("eye"), member_path(member)) %></td>
