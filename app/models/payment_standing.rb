@@ -14,11 +14,11 @@ class PaymentStanding
   end
 
   def never_payed_standing
-    if @member.member_since < 6.months.ago
+    if @member.membership_started_at < 6.months.ago
       PaymentStanding.bad
-    elsif @member.member_since > 3.months.ago
+    elsif @member.membership_started_at > 3.months.ago
       PaymentStanding.neutral
-    elsif @member.member_since > 1.months.ago
+    elsif @member.membership_started_at > 1.months.ago
       PaymentStanding.good
     else
       PaymentStanding.unknown

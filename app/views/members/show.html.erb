@@ -19,8 +19,14 @@
           </tr>
           <tr>
             <td>Mitglied seit</td>
-            <td><%= @member.member_since %></td>
+            <td><%= @member.membership_started_at %></td>
           </tr>
+          <% if @member.membership_ended_at.present? %>
+          <tr>
+            <td>Mitglied bis</td>
+            <td><%= @member.membership_ended_at %></td>
+          </tr>
+          <% end %>
           <tr>
             <td>Geburtstag</td>
             <td><%= @member.date_of_birth %> (Alter: <%= @member.age %>)</td>

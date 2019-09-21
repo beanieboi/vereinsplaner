@@ -20,4 +20,26 @@
       <%= render @members %>
     </tbody>
   </table>
+  <div class="row">
+    <div class="mt-4 px-3 pt-4 pb-5">
+      <h2>Ehemalige</h2>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Vorname</th>
+        <th scope="col">Nachname</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Mitgliedsantrag</th>
+        <th scope="col">letzte Zahlung</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @alumni %>
+    </tbody>
+  </table>
+
 </div>

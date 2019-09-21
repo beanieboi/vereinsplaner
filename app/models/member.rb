@@ -10,6 +10,14 @@ class Member < ApplicationRecord
 
   validates :gender, inclusion: { in: GENDER }
 
+  def self.alumni
+    where.not(membership_ended_at: nil)
+  end
+
+  def self.current
+    where(membership_ended_at: nil)
+  end
+
   def membership_fee_in_euro
     return if membership_fee.nil?
 

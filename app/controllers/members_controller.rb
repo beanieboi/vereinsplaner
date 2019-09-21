@@ -1,14 +1,14 @@
 class MembersController < ApplicationController
   def index
-    @members = Member.order(:last_name).order(:first_name).all
+    @members = Member.current.order(:last_name).order(:first_name).all
+    @alumni = Member.alumni.order(:last_name).order(:first_name).all
   end
 
   def new
     @member = Member.new
     # set some defaults
     @member.membership_fee_in_euro = 45
-    @member.member_since = Date.today
-    @member.member_since = Date.today
+    @member.membership_started_at = Date.today
     @member.membership_type = MembershipType.full.first
   end
 
@@ -75,7 +75,8 @@ class MembersController < ApplicationController
       :contact_phone,
       :membership_fee_in_euro,
       :membership_type_id,
-      :member_since,
+      :membership_started_at,
+      :membership_ended_at,
       :application_form,
       :sepa_mandate,
       :comment,

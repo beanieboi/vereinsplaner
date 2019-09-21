@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_29_101648) do
+ActiveRecord::Schema.define(version: 2019_09_21_094241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2019_08_29_101648) do
     t.text "contact_email"
     t.text "contact_phone"
     t.integer "membership_fee", null: false
-    t.date "member_since", null: false
+    t.date "membership_started_at", null: false
     t.text "comment"
     t.string "tags", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2019_08_29_101648) do
     t.text "gender", default: "undisclosed", null: false
     t.boolean "sepa_mandate", default: false, null: false
     t.integer "member_id", default: 0, null: false
+    t.date "membership_ended_at"
     t.index ["tags"], name: "index_members_on_tags", using: :gin
   end
 

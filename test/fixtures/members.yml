@@ -10,7 +10,7 @@ ben:
   country: "Deutschland"
   contact_email: "beanie@benle.de"
   contact_phone: "017620030295"
-  member_since: <%= Date.today %>
+  membership_started_at: <%= Date.today %>
   membership_fee: 4500
   membership_type_id: 5
   sepa_mandate: true
@@ -28,7 +28,7 @@ nie_zahler:
   country: "Deutschland"
   contact_email: "nie@zahlen.de"
   contact_phone: ""
-  member_since: <%= Date.today %>
+  membership_started_at: <%= Date.today %>
   membership_fee: 4500
   membership_type_id: 5
   application_form_present: true
@@ -45,7 +45,7 @@ old:
   country: "Deutschland"
   contact_email: "nie@zahlen.de"
   contact_phone: ""
-  member_since: <%= 500.days.ago.to_date %>
+  membership_started_at: <%= 500.days.ago.to_date %>
   membership_fee: 4500
   membership_type_id: 5
   application_form_present: true
