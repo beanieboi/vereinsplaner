@@ -1,7 +1,8 @@
 <div class="container">
+  <% if @active_members.any? %>
   <div class="row">
     <div class="mt-4 px-3 pt-4 pb-5">
-      <h2>Mitglieder</h2><%= link_to("neues Mitglied", new_member_path) %>
+      <h2>aktive Mitglieder</h2><%= link_to("neues Mitglied", new_member_path) %>
     </div>
   </div>
   <table class="table table-hover">
@@ -17,9 +18,80 @@
       </tr>
     </thead>
     <tbody>
-      <%= render @members %>
+      <%= render @active_members %>
     </tbody>
   </table>
+  <% end %>
+  <% if @support_members.any? %>
+  <div class="row">
+    <div class="mt-4 px-3 pt-4 pb-5">
+      <h2>Fördermitglieder</h2>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Vorname</th>
+        <th scope="col">Nachname</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Mitgliedsantrag</th>
+        <th scope="col">letzte Zahlung</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @support_members %>
+    </tbody>
+  </table>
+  <% end %>
+  <% if @passive_members.any? %>
+  <div class="row">
+    <div class="mt-4 px-3 pt-4 pb-5">
+      <h2>passive Mitglieder</h2>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Vorname</th>
+        <th scope="col">Nachname</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Mitgliedsantrag</th>
+        <th scope="col">letzte Zahlung</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @passive_members %>
+    </tbody>
+  </table>
+  <% end %>
+  <% if @discounted_members.any? %>
+  <div class="row">
+    <div class="mt-4 px-3 pt-4 pb-5">
+      <h2>ermäßigte Mitglieder</h2>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Vorname</th>
+        <th scope="col">Nachname</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Mitgliedsantrag</th>
+        <th scope="col">letzte Zahlung</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @discounted_members %>
+    </tbody>
+  </table>
+  <% end %>
+  <% if @alumni.any? %>
   <div class="row">
     <div class="mt-4 px-3 pt-4 pb-5">
       <h2>Ehemalige</h2>
@@ -41,5 +113,5 @@
       <%= render @alumni %>
     </tbody>
   </table>
-
+  <% end %>
 </div>

@@ -2,6 +2,11 @@ class MembersController < ApplicationController
   def index
     @members = Member.current.order(:last_name).order(:first_name).all
     @alumni = Member.alumni.order(:last_name).order(:first_name).all
+
+    @active_members = @members.select { |m| m.membership_type.short == "full" }
+    @support_members = @members.select { |m| m.membership_type.short == "support" }
+    @discounted_members = @members.select { |m| m.membership_type.short == "discounted" }
+    @passive_members = @members.select { |m| m.membership_type.short == "passive" }
   end
 
   def new
