@@ -8,19 +8,19 @@
     <tbody>
       <tr>
         <td>aktive Mitglieder</td>
-        <td><%= MembershipType.full.first.members.count %></td>
+        <td><%= MembershipType.full.first.members.current.count %></td>
       </tr>
       <tr>
         <td>ermäßigte Mitglieder</td>
-        <td><%= MembershipType.discounted.first.members.count %></td>
+        <td><%= MembershipType.discounted.first.members.current.count %></td>
       </tr>
       <tr>
         <td>passive Mitglieder</td>
-        <td><%= MembershipType.passive.first.members.count %></td>
+        <td><%= MembershipType.passive.first.members.current.count %></td>
       </tr>
       <tr>
         <td>Fördermitglieder</td>
-        <td><%= MembershipType.support.first.members.count %></td>
+        <td><%= MembershipType.support.first.members.current.count %></td>
       </tr>
     </tbody>
   </table>
