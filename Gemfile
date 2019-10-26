@@ -23,9 +23,6 @@ gem 'font-awesome-rails'
 gem 'jbuilder', '~> 2.5'
 gem 'bcrypt'
 
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
-
 group :development, :test do
   gem 'pry-rails'
 end
