@@ -23,6 +23,6 @@ module ApplicationHelper
   end
 
   def mail_list(members)
-    members.collect(&:contact_email).join(';')
+    members.collect(&:contact_email).join(',').html_safe
   end
 end
