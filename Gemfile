@@ -18,7 +18,7 @@ gem 'pundit' # Authorization Library https://github.com/elabs/pundit
 gem 'sass-rails', '~> 5'
 gem 'bootstrap', '~> 4.3.1'
 gem 'webpacker', '~> 4.0'
-gem 'font-awesome-rails'
+gem 'font_awesome5_rails'
 
 gem 'jbuilder', '~> 2.5'
 gem 'bcrypt'
