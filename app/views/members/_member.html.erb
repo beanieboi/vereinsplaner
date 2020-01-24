@@ -3,9 +3,9 @@
   <td><%= member.last_name %></td>
   <td><%= member.tags.to_sentence %></td>
   <% if member.application_form.present? %>
-    <td>vorhanden</td>
+    <td><%= fa_icon("check-circle", type: :regular) %></td>
   <% else %>
-    <td>Nicht vorhanden</td>
+    <td><%= fa_icon("circle", type: :regular) %></td>
   <% end %>
   <td><%= last_payment_for_table(member) %></td>
   <td><%= link_to(fa_icon("eye"), member_path(member)) %></td>

@@ -104,3 +104,15 @@ label.tag {
     color: white;
   }
 }
+
+.member-table td:nth-child(1),
+  .member-table td:nth-child(2) {
+  width: 164px;
+}
+
+.member-table td:nth-last-child(1),
+  .member-table td:nth-last-child(2),
+  .member-table td:nth-last-child(3),
+  .member-table td:nth-last-child(4) {
+  width: 64px;
+}
