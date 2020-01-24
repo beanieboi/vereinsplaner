@@ -2,7 +2,7 @@
   <% if @active_members.any? %>
   <div class="row">
     <div class="mt-4 px-3 pt-4 pb-5">
-      <h2>aktive Mitglieder</h2><%= link_to("neues Mitglied", new_member_path) %>
+      <h2>aktive Mitglieder</h2><%= link_to("neues Mitglied", new_member_path) %> <%= mail_to(mail_list(@active_members), "E-Mail senden") %>
     </div>
   </div>
   <table class="table table-hover member-table">
@@ -25,7 +25,7 @@
   <% if @support_members.any? %>
   <div class="row">
     <div class="mt-4 px-3 pt-4 pb-5">
-      <h2>Fördermitglieder</h2>
+      <h2>Fördermitglieder</h2> <%= mail_to(mail_list(@support_members), "E-Mail senden") %>
     </div>
   </div>
   <table class="table table-hover member-table">
@@ -48,7 +48,7 @@
   <% if @passive_members.any? %>
   <div class="row">
     <div class="mt-4 px-3 pt-4 pb-5">
-      <h2>passive Mitglieder</h2>
+      <h2>passive Mitglieder</h2> <%= mail_to(mail_list(@passive_members), "E-Mail senden") %>
     </div>
   </div>
   <table class="table table-hover member-table">
@@ -71,7 +71,7 @@
   <% if @discounted_members.any? %>
   <div class="row">
     <div class="mt-4 px-3 pt-4 pb-5">
-      <h2>ermäßigte Mitglieder</h2>
+      <h2>ermäßigte Mitglieder</h2> <%= mail_to(mail_list(@discounted_members), "E-Mail senden") %>
     </div>
   </div>
   <table class="table table-hover member-table">

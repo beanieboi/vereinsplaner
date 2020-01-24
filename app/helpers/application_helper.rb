@@ -21,4 +21,8 @@ module ApplicationHelper
       fa_icon("times")
     end
   end
+
+  def mail_list(members)
+    members.collect(&:contact_email).join(';')
+  end
 end
