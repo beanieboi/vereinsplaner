@@ -13,4 +13,13 @@
       });
     }
   });
+
+  var navBars = document.getElementsByClassName('navbar-toggler');
+    navBars.forEach(function(navBar) {
+    navBar.addEventListener('click', function() {
+      var target = ele.dataset.target;
+      var navItems = document.getElementById(target);
+      navItems.classList.toggle('collapse')
+    })
+  });
 })();
