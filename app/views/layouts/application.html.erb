@@ -18,37 +18,37 @@
   <body id="page-top">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="mainNav">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarToggler">
         <ul class="navbar-nav ml-auto">
           <% if logged_in? %>
-            <li class="nav-item">
+            <li class="nav-item nav-link">
               <%= link_to 'Start', '/' %>
             </li>
-            <li class="nav-item">
+            <li class="nav-item nav-link">
               <%= link_to 'Dokumente', documents_path %>
             </li>
-            <li class="nav-item">
+            <li class="nav-item nav-link">
               <%= link_to 'Mitglieder', members_path %>
             </li>
-            <li class="nav-item">
+            <li class="nav-item nav-link">
               <%= link_to 'Zahlungen', payments_path %>
             </li>
-            <li class="nav-item">
+            <li class="nav-item nav-link">
               <%= link_to 'Statistiken', statistics_path %>
             </li>
-            <li class="nav-item">
+            <li class="nav-item nav-link">
               <%= link_to 'Profil', users_path %>
             </li>
             <% if current_user.admin? %>
-              <li class="nav-item">
+              <li class="nav-item nav-link">
                 <%= link_to 'Admin', rails_admin_path %>
               </li>
             <% end %>
-            <li class="nav-item">
+            <li class="nav-item nav-link">
               <%= link_to('Abmelden', signout_url, method: :delete) %>
             </li>
           <% end %>
