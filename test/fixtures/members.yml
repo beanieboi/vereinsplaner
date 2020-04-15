@@ -14,7 +14,6 @@ ben:
   membership_fee: 4500
   membership_type_id: 5
   sepa_mandate: true
-  application_form_present: true
 
 nie_zahler:
   id: 2
@@ -31,7 +30,6 @@ nie_zahler:
   membership_started_at: <%= Date.today %>
   membership_fee: 4500
   membership_type_id: 5
-  application_form_present: true
 
 old:
   id: 3
@@ -48,4 +46,3 @@ old:
   membership_started_at: <%= 500.days.ago.to_date %>
   membership_fee: 4500
   membership_type_id: 5
-  application_form_present: true
