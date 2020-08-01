@@ -10,6 +10,10 @@ class Member < ApplicationRecord
 
   validates :gender, inclusion: { in: GENDER }
 
+  def self.full_members
+    joins(:membership_type).where(membership_types: { short: :full}).where("membership_type_id = membership_types.id").where(membership_ended_at: nil)
+  end
+
   def self.alumni
     where.not(membership_ended_at: nil)
   end
