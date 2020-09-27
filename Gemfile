@@ -23,6 +23,8 @@ gem 'font_awesome5_rails'
 gem 'jbuilder', '~> 2.5'
 gem 'bcrypt'
 
+gem 'honeycomb-beeline'
+
 group :development, :test do
   gem 'pry-rails'
 end
