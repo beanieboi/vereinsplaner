@@ -19,6 +19,6 @@ amazon:
 
 production:
   service: Mirror
-  primary: Database
+  primary: db
   mirrors:
     - amazon
