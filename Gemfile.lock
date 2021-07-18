@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/markaschneider/activestorage-database-service.git
-  revision: 71cb937e03f1757dc8030aec29239b7fc358da6d
-  specs:
-    activestorage-database-service (1.0.0)
-      rails (>= 5.2.1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -330,7 +323,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activestorage-database-service!
   acts-as-taggable-array-on
   aws-sdk-s3
   barnes

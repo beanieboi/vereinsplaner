@@ -9,7 +9,6 @@ gem 'puma'
 gem 'barnes'
 
 gem 'acts-as-taggable-array-on'
-gem 'activestorage-database-service', github: 'markaschneider/activestorage-database-service'
 gem "aws-sdk-s3", require: false
 gem 'paper_trail'
 gem 'rails_admin', '~> 2.0'
