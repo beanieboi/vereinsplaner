@@ -1,18 +1,6 @@
 (function() {
+  // toggle for mobile nav bar
   document.addEventListener("DOMContentLoaded", () => {
-    const docInput = document.getElementById("document_file");
-    const docInputLabel = document.getElementById("document_file_label");
-    if (docInput && docInputLabel) {
-      docInput.addEventListener("change", () => {
-        const pathSegments = docInput.value.split("\\");
-        if (pathSegments.length > 1) {
-          docInputLabel.textContent = pathSegments[pathSegments.length - 1];
-        } else {
-          docInputLabel.textContent = docInput.value;
-        }
-      });
-    }
-
     var navBars = document.getElementsByClassName('navbar-toggler');
     if (navBars.length > 0) {
       navBars[0].addEventListener('click', function(event) {
