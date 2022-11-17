@@ -14,7 +14,6 @@ gem "aws-sdk-s3", require: false
 gem "paper_trail"
 gem "pundit" # Authorization Library https://github.com/elabs/pundit
 
-
 # Frontend
 gem "sprockets-rails"
 gem "sassc-rails"
