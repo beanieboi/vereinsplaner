@@ -18,7 +18,7 @@ gem "pundit" # Authorization Library https://github.com/elabs/pundit
 # Frontend
 gem "sprockets-rails"
 gem "sassc-rails"
-gem "bootstrap", "< 5"
+gem "bootstrap", "< 6"
 gem "font_awesome5_rails"
 
 group :development, :test do
