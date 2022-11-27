@@ -1,3 +1,5 @@
+//= require rails-ujs
+
 (function() {
   // toggle for mobile nav bar
   document.addEventListener("DOMContentLoaded", () => {
