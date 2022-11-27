@@ -9,5 +9,10 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :update]
   delete '/signout', to: "sessions#destroy", as: :signout
 
+  namespace :admin do
+    resources :dashboard, only: [:index]
+    resources :users
+  end
+
   root to: "dashboards#show"
 end

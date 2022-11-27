@@ -44,6 +44,11 @@
               <li class="nav-item">
                 <%= link_to('Profil', users_path, { class: "nav-link" }) %>
               </li>
+              <% if current_user.admin? %>
+                <li class="nav-item">
+                  <%= link_to('Admin', admin_dashboard_index_path, { class: "nav-link" }) %>
+                </li>
+              <% end %>
               <li class="nav-item">
                 <%= link_to('Abmelden', signout_url, { method: :delete, class: "nav-link" }) %>
               </li>
