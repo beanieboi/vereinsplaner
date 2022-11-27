@@ -40,6 +40,7 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     authorize @user
+    @user.destroy
     redirect_to admin_dashboard_index_path, notice: 'Benutzer erfolgreich gelöscht.'
   end
 
