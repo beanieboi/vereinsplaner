@@ -1,0 +1,15 @@
+<div class="container member-new">
+  <div class="row">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-8 mt-4 pt-4 pb-5">
+      <h2>Benutzer bearbeiten</h2>
+      <%= link_to("zurück", url_for(:back)) %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <%= render 'form', user: @user %>
+  </div>
+  </div>
+</div>
