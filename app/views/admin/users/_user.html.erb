@@ -1,4 +1,5 @@
 <tr>
   <td><%= user.nickname %></td>
   <td><%= link_to("bearbeiten", edit_admin_user_path(user)) %></td>
+  <td><%= link_to("entfernen", admin_user_path(user), method: :delete, data: { confirm: "Willst du #{user.nickname} wirklich entfernen?" } ) %></td>
 </tr>
