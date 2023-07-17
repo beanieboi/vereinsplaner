@@ -1,6 +1,12 @@
 class MembershipType < ApplicationRecord
   has_many :members
 
+  DEPRECATED = %w[discounted passive unknown].freeze
+
+  def self.active
+    where.not(short: DEPRECATED)
+  end
+
   def self.full
     where(short: :full)
   end
