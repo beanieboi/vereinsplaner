@@ -1,3 +1,3 @@
 # Vereinsplaner
 
-Vereinsverwaltung enthält: Mitgliederverwaltung, Dokumentenverwaltung
+Vereinsverwaltung enthält: Mitgliederverwaltung

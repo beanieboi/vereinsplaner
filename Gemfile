@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.0"
+ruby "3.2.2"
 
-gem "rails", "~> 7.0.4"
+gem "rails", "~> 7.1"
 gem "pg"
 gem "puma"
 gem "barnes"
@@ -11,7 +11,6 @@ gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "acts-as-taggable-array-on"
-gem "aws-sdk-s3", require: false
 gem "paper_trail"
 gem "pundit" # Authorization Library https://github.com/elabs/pundit
 
