@@ -11,6 +11,7 @@ gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "acts-as-taggable-array-on"
+gem "aws-sdk-s3", require: false
 gem "paper_trail"
 gem "pundit" # Authorization Library https://github.com/elabs/pundit
 
