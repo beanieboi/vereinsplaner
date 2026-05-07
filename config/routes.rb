@@ -3,8 +3,8 @@
 Rails.application.routes.draw do
   resource :dashboard, only: [ :show ]
 
-  resources :members
-  resources :payments, except: [ :edit ]
+  resources :members, except: [ :destroy ]
+  resources :payments, only: %i[index new create destroy]
   resources :statistics, only: [ :index ]
   resources :sessions, only: %i[new create]
   resources :users, only: %i[index update]
@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :dashboard, only: [ :index ]
-    resources :users
+    resources :users, except: %i[index show]
   end
 
   root to: "dashboards#show"
