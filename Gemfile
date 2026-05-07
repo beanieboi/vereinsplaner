@@ -15,12 +15,15 @@ gem "paper_trail"
 gem "pg"
 gem "puma"
 gem "pundit"
-gem "rails", "~> 7.2"
+gem "rails", "~> 8.1"
 gem "sassc-rails"
 gem "sprockets-rails"
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "bundler-audit", require: false
+  gem "brakeman", require: false
+  gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
