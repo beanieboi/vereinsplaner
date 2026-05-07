@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PaymentsController < ApplicationController
   def index
     @payments = Payment.all
@@ -15,10 +17,10 @@ class PaymentsController < ApplicationController
     if @payment.save
       redirect_to(
         payments_path,
-        flash: { notice: 'Zahlung erfolgreich hinzugefügt' }
+        flash: { notice: "Zahlung erfolgreich hinzugefügt" }
       )
     else
-      render 'new'
+      render "new"
     end
   end
 
@@ -28,19 +30,19 @@ class PaymentsController < ApplicationController
     if @payment.update(payment_params)
       redirect_to(
         payments_path,
-        flash: { notice: 'Zahlung erfolgreich aktualisiert.' }
+        flash: { notice: "Zahlung erfolgreich aktualisiert." }
       )
     else
-      render 'new'
+      render "new"
     end
   end
 
   def destroy
     @payment = Payment.find(params[:id])
     if @payment.destroy
-      redirect_to payments_path, notice: 'Zahlung erfolgreich gelöscht.'
+      redirect_to payments_path, notice: "Zahlung erfolgreich gelöscht."
     else
-      redirect_to payments_path, notice: 'Zahlung konnte nicht gelöscht werden.'
+      redirect_to payments_path, notice: "Zahlung konnte nicht gelöscht werden."
     end
   end
 

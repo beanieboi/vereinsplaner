@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MembershipType < ApplicationRecord
   has_many :members
 

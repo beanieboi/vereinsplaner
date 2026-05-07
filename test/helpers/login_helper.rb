@@ -3,11 +3,11 @@
 module LoginHelper
   def login_as_admin
     post(
-      '/sessions',
+      "/sessions",
       params: {
         user: {
-          email: 'ich@abwesend.com',
-          password: 'vereinsplaner'
+          email: "ich@abwesend.com",
+          password: "vereinsplaner"
         }
       }
     )
@@ -17,11 +17,11 @@ module LoginHelper
 
   def login_as_nobody
     post(
-      '/sessions',
+      "/sessions",
       params: {
         user: {
-          email: 'ich@nobody.com',
-          password: 'vereinsplanernobody'
+          email: "ich@nobody.com",
+          password: "vereinsplanernobody"
         }
       }
     )

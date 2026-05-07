@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -20,9 +22,9 @@ gem "sassc-rails"
 gem "sprockets-rails"
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-  gem "bundler-audit", require: false
   gem "brakeman", require: false
+  gem "bundler-audit", require: false
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
   gem "rubocop-rails-omakase", require: false
 end
 
@@ -31,8 +33,5 @@ group :development do
 end
 
 group :test do
-  gem "capybara"
-  gem "selenium-webdriver"
   gem "simplecov"
-  gem "webdrivers"
 end

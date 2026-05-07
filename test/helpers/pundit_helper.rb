@@ -12,7 +12,7 @@ module PunditHelper
   end
 
   def permit(user, record, action)
-    cls = self.class.to_s.gsub(/Test/, '')
+    cls = self.class.to_s.gsub(/Test/, "")
     cls.constantize.new(user, record).public_send("#{action}?")
   end
 end

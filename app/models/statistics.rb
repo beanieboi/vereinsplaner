@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Statistics
   def member_distribution_for_lsb
     entries = member_birthdate_distribution.map do |year, members|
       LsbEntry.new(year, members)
     end
 
-    entries.sort_by { |e| e.year }
+    entries.sort_by(&:year)
   end
 
   private
@@ -14,13 +16,12 @@ class Statistics
   end
 
   def member_birthdate_distribution
-    members_with_birthdate.inject({}) do |memo, m|
-      if memo.has_key?(m.date_of_birth.year)
+    members_with_birthdate.each_with_object({}) do |m, memo|
+      if memo.key?(m.date_of_birth.year)
         memo[m.date_of_birth.year] << m
       else
         memo[m.date_of_birth.year] = [ m ]
       end
-      memo
     end
   end
 end
@@ -34,11 +35,11 @@ class LsbEntry
   end
 
   def male_count
-    @members.count { |m| m.male? }
+    @members.count(&:male?)
   end
 
   def female_count
-    @members.count { |m| m.female? }
+    @members.count(&:female?)
   end
 
   def total
