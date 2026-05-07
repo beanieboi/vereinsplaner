@@ -7,7 +7,6 @@ ruby file: ".ruby-version"
 
 gem "acts-as-taggable-array-on"
 gem "aws-sdk-s3", require: false
-gem "barnes"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "bootstrap"
