@@ -1,7 +1,6 @@
 <tr>
   <td><%= member.first_name %></td>
   <td><%= member.last_name %></td>
-  <td><%= member.tags.to_sentence %></td>
   <% if member.application_form.present? %>
     <td><%= fa_icon("check-circle", type: :regular) %></td>
   <% else %>

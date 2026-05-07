@@ -5,7 +5,6 @@ class Member < ApplicationRecord
 
   has_one_attached :application_form
   has_paper_trail skip: :application_form
-  acts_as_taggable_array_on :tags
 
   belongs_to :membership_type
   has_many :payments
@@ -66,6 +65,9 @@ class Member < ApplicationRecord
   end
 
   def self.next_member_id
-    Member.maximum(:member_id) + 1
+    current_max = Member.maximum(:member_id)
+    return 1 if current_max.nil?
+
+    Integer(current_max) + 1
   end
 end

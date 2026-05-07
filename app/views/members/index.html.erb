@@ -1,16 +1,18 @@
 <div class="container">
-  <% if @active_members.any? %>
   <div class="row">
     <div class="mt-4 px-3 pt-4 pb-5">
-      <h2>aktive Mitglieder</h2><%= link_to("neues Mitglied", new_member_path) %> <%= mail_to(mail_list(@active_members), "E-Mail senden") %>
+      <h2>aktive Mitglieder</h2><%= link_to("neues Mitglied", new_member_path) %>
+      <% if @active_members.any? %>
+        <%= mail_to(mail_list(@active_members), "E-Mail senden") %>
+      <% end %>
     </div>
   </div>
+  <% if @active_members.any? %>
   <table class="table table-hover member-table">
     <thead>
       <tr>
         <th scope="col">Vorname</th>
         <th scope="col">Nachname</th>
-        <th scope="col">Tags</th>
         <th scope="col"><%= fa_icon("receipt") %></th>
         <th scope="col"><%= fa_icon("coins") %></th>
         <th scope="col"><%= fa_icon("user", type: :regular) %></th>
@@ -33,7 +35,6 @@
       <tr>
         <th scope="col">Vorname</th>
         <th scope="col">Nachname</th>
-        <th scope="col">Tags</th>
         <th scope="col"><%= fa_icon("receipt") %></th>
         <th scope="col"><%= fa_icon("coins") %></th>
         <th scope="col"><%= fa_icon("user", type: :regular) %></th>
@@ -56,7 +57,6 @@
       <tr>
         <th scope="col">Vorname</th>
         <th scope="col">Nachname</th>
-        <th scope="col">Tags</th>
         <th scope="col"><%= fa_icon("receipt") %></th>
         <th scope="col"><%= fa_icon("coins") %></th>
         <th scope="col"><%= fa_icon("user", type: :regular) %></th>
@@ -79,7 +79,6 @@
       <tr>
         <th scope="col">Vorname</th>
         <th scope="col">Nachname</th>
-        <th scope="col">Tags</th>
         <th scope="col"><%= fa_icon("receipt") %></th>
         <th scope="col"><%= fa_icon("coins") %></th>
         <th scope="col"><%= fa_icon("user", type: :regular) %></th>
@@ -102,7 +101,6 @@
       <tr>
         <th scope="col">Vorname</th>
         <th scope="col">Nachname</th>
-        <th scope="col">Tags</th>
         <th scope="col"><%= fa_icon("receipt") %></th>
         <th scope="col"><%= fa_icon("coins") %></th>
         <th scope="col"><%= fa_icon("user", type: :regular) %></th>

@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_241_012_122_958) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_07_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -73,7 +73,6 @@ ActiveRecord::Schema[7.1].define(version: 20_241_012_122_958) do
     t.integer 'membership_fee', null: false
     t.date 'membership_started_at', null: false
     t.text 'comment'
-    t.string 'tags', default: [], array: true
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.integer 'membership_type_id', default: 0, null: false
@@ -81,7 +80,6 @@ ActiveRecord::Schema[7.1].define(version: 20_241_012_122_958) do
     t.boolean 'sepa_mandate', default: false, null: false
     t.integer 'member_id', default: 0, null: false
     t.date 'membership_ended_at'
-    t.index ['tags'], name: 'index_members_on_tags', using: :gin
   end
 
   create_table 'membership_types', force: :cascade do |t|
@@ -105,13 +103,6 @@ ActiveRecord::Schema[7.1].define(version: 20_241_012_122_958) do
     t.bigint 'amount'
     t.date 'payed_at'
     t.integer 'created_by_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-  end
-
-  create_table 'tags', force: :cascade do |t|
-    t.text 'object'
-    t.text 'name'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end

@@ -5,7 +5,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby file: ".ruby-version"
 
-gem "acts-as-taggable-array-on"
 gem "aws-sdk-s3", require: false
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
