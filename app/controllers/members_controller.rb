@@ -43,8 +43,6 @@ class MembersController < ApplicationController
   def update
     @member = Member.find(params[:id])
 
-    @member.tags = [] unless member_params.key?(:tags)
-
     if @member.update(member_params)
       redirect_to(
         members_path,
@@ -85,8 +83,7 @@ class MembersController < ApplicationController
       :application_form,
       :sepa_mandate,
       :comment,
-      :member_id,
-      tags: []
+      :member_id
     )
   end
 end
