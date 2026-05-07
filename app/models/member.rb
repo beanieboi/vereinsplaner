@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Member < ApplicationRecord
-  GENDER = ["male", "female", "undisclosed"]
+  GENDER = %w[male female undisclosed].freeze
 
   has_one_attached :application_form
   has_paper_trail skip: :application_form
@@ -11,7 +13,7 @@ class Member < ApplicationRecord
   validates :gender, inclusion: { in: GENDER }
 
   def self.full_members
-    joins(:membership_type).where(membership_types: { short: :full}).where("membership_type_id = membership_types.id").where(membership_ended_at: nil)
+    joins(:membership_type).where(membership_types: { short: :full }).where("membership_type_id = membership_types.id").where(membership_ended_at: nil)
   end
 
   def self.alumni
@@ -45,22 +47,22 @@ class Member < ApplicationRecord
   end
 
   def name
-    [first_name, last_name].join(" ")
+    [ first_name, last_name ].join(" ")
   end
 
   def age
     return if date_of_birth.nil?
 
     now = Time.now.utc.to_date
-    now.year - date_of_birth.year - ((now.month > date_of_birth.month || (now.month == date_of_birth.month && now.day >= date_of_birth.day)) ? 0 : 1)
+    now.year - date_of_birth.year - (now.month > date_of_birth.month || (now.month == date_of_birth.month && now.day >= date_of_birth.day) ? 0 : 1)
   end
 
   def male?
-    self.gender == "male"
+    gender == "male"
   end
 
   def female?
-    self.gender == "female"
+    gender == "female"
   end
 
   def self.next_member_id

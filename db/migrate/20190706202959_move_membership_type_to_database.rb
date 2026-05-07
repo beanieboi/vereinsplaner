@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MoveMembershipTypeToDatabase < ActiveRecord::Migration[6.0]
   def change
     add_column :members, :membership_type_id, :integer, null: false, default: 0

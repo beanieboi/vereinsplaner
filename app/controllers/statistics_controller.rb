@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StatisticsController < ApplicationController
   def index
     @members_without_birthdate = Member.current.all.select { |m| m.date_of_birth.nil? }

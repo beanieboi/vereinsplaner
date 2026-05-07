@@ -20,7 +20,7 @@ module AuthenticatedSystem
   end
 
   def access_denied
-    redirect_to new_session_path, alert: 'Please sign in to proceed'
+    redirect_to new_session_path, alert: "Please sign in to proceed"
   end
 
   # Accesses the current user from the session.
@@ -32,7 +32,7 @@ module AuthenticatedSystem
   #
   # updates the session and sets the current_user
   def sign_in(new_user)
-    session['current_user_id'] = new_user.id
+    session["current_user_id"] = new_user.id
     @current_user = nil
     current_user
   end
@@ -50,7 +50,7 @@ module AuthenticatedSystem
   end
 
   def login_from_session
-    current_user_id = session['current_user_id']
+    current_user_id = session["current_user_id"]
     User.find_by(id: current_user_id) if current_user_id.present?
   end
 

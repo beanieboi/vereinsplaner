@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Payment < ApplicationRecord
   has_paper_trail
 
   belongs_to :member
-  belongs_to :created_by, class_name: 'User'
+  belongs_to :created_by, class_name: "User"
 end

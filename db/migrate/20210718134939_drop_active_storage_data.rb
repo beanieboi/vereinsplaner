@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DropActiveStorageData < ActiveRecord::Migration[6.1]
   def up
     drop_table :active_storage_data

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Gender
   attr_reader :id, :name
 
@@ -8,9 +10,9 @@ class Gender
 
   def self.all
     [
-      self.new(:male, "männlich"),
-      self.new(:female, "weiblich"),
-      self.new(:undisclosed, "keine Angabe")
+      new(:male, "männlich"),
+      new(:female, "weiblich"),
+      new(:undisclosed, "keine Angabe")
     ]
   end
 end

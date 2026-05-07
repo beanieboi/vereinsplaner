@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   def index
     @user = current_user
@@ -9,10 +11,10 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to(
         users_path,
-        flash: { notice: 'Profil erfolgreich aktualisiert.' }
+        flash: { notice: "Profil erfolgreich aktualisiert." }
       )
     else
-      render 'new'
+      render "new"
     end
   end
 
@@ -23,7 +25,7 @@ class UsersController < ApplicationController
       :user
     ).permit(
       :password,
-      :password_confirmation,
+      :password_confirmation
     )
   end
 end

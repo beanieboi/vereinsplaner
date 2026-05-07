@@ -5,7 +5,7 @@ class SessionsController < ActionController::Base
 
   protect_from_forgery with: :exception
 
-  layout 'application'
+  layout "application"
 
   def new
     if logged_in?
@@ -18,14 +18,14 @@ class SessionsController < ActionController::Base
   def create
     @user = User.find_by(email: session_params[:email])
 
-    if @user && @user.authenticate(session_params[:password])
+    if @user&.authenticate(session_params[:password])
       sign_in(@user)
       update_login_stats(request.remote_ip)
       redirect_to(dashboard_path)
     else
       redirect_back(
         fallback_location: root_path,
-        flash: { alert: 'Invalid email or password.' }
+        flash: { alert: "Invalid email or password." }
       )
     end
   end

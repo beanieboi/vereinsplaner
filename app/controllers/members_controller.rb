@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MembersController < ApplicationController
   def index
     @members = Member.current.order(:last_name).order(:first_name).all
@@ -31,34 +33,32 @@ class MembersController < ApplicationController
     if @member.save
       redirect_to(
         members_path,
-        flash: { notice: 'Mitglied erfolgreich hinzugefügt' }
+        flash: { notice: "Mitglied erfolgreich hinzugefügt" }
       )
     else
-      render 'new'
+      render "new"
     end
   end
 
   def update
     @member = Member.find(params[:id])
 
-    unless member_params.key?(:tags)
-      @member.tags = []
-    end
+    @member.tags = [] unless member_params.key?(:tags)
 
     if @member.update(member_params)
       redirect_to(
         members_path,
-        flash: { notice: 'Mitglied erfolgreich aktualisiert.' }
+        flash: { notice: "Mitglied erfolgreich aktualisiert." }
       )
     else
-      render 'new'
+      render "new"
     end
   end
 
   def destroy
     @member = Member.find(params[:id])
     authorize @member
-    redirect_to members_path, notice: 'Mitglieder erfolgreich gelöscht.'
+    redirect_to members_path, notice: "Mitglieder erfolgreich gelöscht."
   end
 
   private
@@ -86,7 +86,7 @@ class MembersController < ApplicationController
       :sepa_mandate,
       :comment,
       :member_id,
-      :tags => [],
+      tags: []
     )
   end
 end

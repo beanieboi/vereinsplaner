@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class PaymentStanding
   PAYMENT_DUE_DATE =
 
-  def initialize(member)
-    @member = member
-  end
+    def initialize(member)
+      @member = member
+    end
 
   def standing
     if last_payment.nil?
