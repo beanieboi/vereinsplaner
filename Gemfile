@@ -12,11 +12,11 @@ gem "bootstrap"
 gem "font_awesome5_rails"
 gem "jbuilder"
 gem "paper_trail"
-gem "pg"
 gem "puma"
 gem "pundit"
 gem "rails", "~> 8.1"
 gem "sassc-rails"
+gem "sqlite3"
 gem "sprockets-rails"
 
 group :development, :test do

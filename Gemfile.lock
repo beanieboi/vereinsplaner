@@ -179,8 +179,6 @@ GEM
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
-    pg (1.6.3-arm64-darwin)
-    pg (1.6.3-x86_64-linux)
     popper_js (2.11.8)
     pp (0.6.3)
       prettyprint
@@ -295,6 +293,8 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    sqlite3 (2.9.4-arm64-darwin)
+    sqlite3 (2.9.4-x86_64-linux-gnu)
     stringio (3.2.0)
     thor (1.5.0)
     tilt (2.7.0)
@@ -335,7 +335,6 @@ DEPENDENCIES
   font_awesome5_rails
   jbuilder
   paper_trail
-  pg
   puma
   pundit
   rails (~> 8.1)
@@ -343,6 +342,7 @@ DEPENDENCIES
   sassc-rails
   simplecov
   sprockets-rails
+  sqlite3
   web-console
 
 RUBY VERSION
