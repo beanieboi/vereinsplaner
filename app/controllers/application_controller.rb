@@ -15,6 +15,6 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorized
-    redirect_to root_path, alert: "Keine Berechtigung."
+    redirect_to root_path, alert: "Keine Berechtigung.", status: :see_other
   end
 end

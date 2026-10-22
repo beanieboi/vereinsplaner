@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class UsersController < ApplicationController
+  class UsersController < BaseController
     def new
       @user = User.new
       authorize @user
@@ -14,12 +14,13 @@ module Admin
 
     def show
       @user = User.find(params[:id])
+      authorize @user
     end
 
     def create
       @user = User.new
       authorize @user
-      @user.assign_attributes(user_params)
+      @user.assign_attributes(permitted_attributes(@user))
 
       if @user.save
         redirect_to(
@@ -27,7 +28,7 @@ module Admin
           flash: { notice: "Benutzer erfolgreich hinzugefügt" }
         )
       else
-        render "new"
+        render "new", status: :unprocessable_content
       end
     end
 
@@ -35,13 +36,13 @@ module Admin
       @user = User.find(params[:id])
       authorize @user
 
-      if @user.update(user_params)
+      if @user.update(permitted_attributes(@user))
         redirect_to(
           admin_dashboard_index_path,
           flash: { notice: "Benutzer erfolgreich aktualisiert." }
         )
       else
-        render "new"
+        render "edit", status: :unprocessable_content
       end
     end
 
@@ -50,14 +51,6 @@ module Admin
       authorize @user
       @user.destroy
       redirect_to admin_dashboard_index_path, notice: "Benutzer erfolgreich gelöscht."
-    end
-
-    private
-
-    def user_params
-      attrs = params.require(:user).permit(:nickname, :email, :password, :password_confirmation)
-      attrs[:admin] = params[:user][:admin] if current_user.admin? && params[:user].key?(:admin)
-      attrs
     end
   end
 end
