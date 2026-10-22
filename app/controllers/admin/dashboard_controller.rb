@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class DashboardController < ApplicationController
+  class DashboardController < BaseController
     def index
       authorize User
       @users = User.all
