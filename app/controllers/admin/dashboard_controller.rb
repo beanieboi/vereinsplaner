@@ -3,6 +3,7 @@
 module Admin
   class DashboardController < ApplicationController
     def index
+      authorize User
       @users = User.all
     end
   end
