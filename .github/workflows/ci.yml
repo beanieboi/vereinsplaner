@@ -7,8 +7,11 @@ on:
     branches: [ main ]
 
 jobs:
-  scan_ruby:
+  bundler_audit:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -19,7 +22,47 @@ jobs:
           bundler-cache: true
 
       - name: Scan for security vulnerabilities in Ruby dependencies
+        if: github.event_name == 'push'
         run: bin/bundler-audit
+
+      # On PRs, only fail for advisories the PR introduces; ones already on the
+      # base branch are reported in a PR comment instead.
+      - name: Scan for security vulnerabilities introduced by this PR
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git fetch --depth=1 origin "$BASE_REF"
+          git show FETCH_HEAD:Gemfile.lock > "$RUNNER_TEMP/base.Gemfile.lock"
+          bin/bundler-audit-diff "$RUNNER_TEMP/base.Gemfile.lock" "$RUNNER_TEMP/bundler-audit.md"
+
+      - name: Comment scan results on PR
+        if: always() && github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          report="$RUNNER_TEMP/bundler-audit.md"
+          [ -f "$report" ] || exit 0
+          comment_id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
+            --jq '.[] | select(.body | startswith("<!-- bundler-audit-diff -->")) | .id' | head -n 1)
+          if [ -n "$comment_id" ]; then
+            gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment_id" -F body=@"$report"
+          elif ! grep -q "No known vulnerabilities" "$report"; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -F body=@"$report"
+          fi
+
+  brakeman:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error

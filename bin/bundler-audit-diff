@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Compares bundler-audit results of Gemfile.lock against a base lockfile
+# (usually the one on main) and only fails for advisories the change introduces.
+#
+#   bin/bundler-audit-diff BASE_LOCKFILE [REPORT_PATH]
+#
+# A Markdown summary is written to REPORT_PATH when given.
+
+require_relative '../config/boot'
+require 'bundler/audit/database'
+require 'bundler/audit/scanner'
+require 'pathname'
+
+base_lockfile, report_path = ARGV
+abort 'usage: bin/bundler-audit-diff BASE_LOCKFILE [REPORT_PATH]' unless base_lockfile
+
+root = Pathname(__dir__).parent.expand_path
+config = 'config/bundler-audit.yml'
+
+Bundler::Audit::Database.update!(quiet: true)
+database = Bundler::Audit::Database.new
+
+scan = lambda do |lockfile|
+  relative = Pathname(lockfile).expand_path.relative_path_from(root).to_s
+  scanner = Bundler::Audit::Scanner.new(root.to_s, relative, database, config)
+  scanner.scan.to_h do |result|
+    case result
+    when Bundler::Audit::Results::UnpatchedGem
+      [ [ result.gem.name, result.advisory.id ], result ]
+    when Bundler::Audit::Results::InsecureSource
+      [ [ :source, result.source.to_s ], result ]
+    end
+  end
+end
+
+head = scan.call('Gemfile.lock')
+base = scan.call(base_lockfile)
+
+introduced = head.reject { |key, _| base.key?(key) }.values
+existing = head.select { |key, _| base.key?(key) }.values
+
+describe = lambda do |result|
+  case result
+  when Bundler::Audit::Results::UnpatchedGem
+    advisory = result.advisory
+    solution = advisory.patched_versions.any? ? "update to `#{advisory.patched_versions.join("`, `")}`" : 'no patch yet'
+    "- **#{result.gem.name} #{result.gem.version}**: [#{advisory.id}](#{advisory.url}) #{advisory.title} " \
+      "(#{advisory.criticality || 'unknown'}, #{solution})"
+  when Bundler::Audit::Results::InsecureSource
+    "- Insecure gem source: `#{result.source}`"
+  end
+end
+
+report = +"<!-- bundler-audit-diff -->\n### bundler-audit\n\n"
+if head.empty?
+  report << "No known vulnerabilities in `Gemfile.lock`.\n"
+else
+  if introduced.any?
+    report << "**Introduced by this change:**\n\n#{introduced.map(&describe).join("\n")}\n\n"
+  end
+  if existing.any?
+    report << "**Already present on the base branch** (not blocking this change):\n\n" \
+              "#{existing.map(&describe).join("\n")}\n"
+  end
+end
+
+puts report
+File.write(report_path, report) if report_path
+
+exit(introduced.any? ? 1 : 0)
