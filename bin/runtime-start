@@ -1,0 +1,21 @@
+#!/bin/sh
+# Entrypoint for the runtime (see flake.nix): prepares the SQLite database in
+# $STATE_DIR, then serves on 127.0.0.1:$PORT. Everything else is read-only.
+set -eu
+
+: "${PORT:?PORT must be set}"
+: "${STATE_DIR:?STATE_DIR must be set}"
+: "${RAILS_MASTER_KEY:?RAILS_MASTER_KEY must be set (runtime env set)}"
+
+export RAILS_ENV=production
+export BUNDLE_FORCE_RUBY_PLATFORM=1
+export BUNDLE_WITHOUT=development:test
+export DATABASE_URL="sqlite3:$STATE_DIR/production.sqlite"
+export BOOTSNAP_CACHE_DIR="${STATE_DIR}/cache/bootsnap"
+export PATH="@wrappedRuby@/bin:$PATH"
+
+cd "@appdir@"
+
+ruby bin/rails db:prepare
+# -b on the command line takes precedence over the port in config/puma.rb.
+exec bundle exec puma -C config/puma.rb -b "tcp://127.0.0.1:$PORT"

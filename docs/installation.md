@@ -69,6 +69,26 @@ bin/bundler-audit
 bin/ci           # all of the above, same as the GitHub Actions workflow
 ```
 
+## Production on the runtime
+
+Production runs on the runtime (the `apps` VM behind `deploy.abwesend.com`). Every push to `main` runs `.github/workflows/deploy.yaml`, which builds the Nix flake's default package and posts the closure to the runtime with the job's OIDC token. The repository variable `RUNTIME_DEPLOY_URL` holds the deploy URL.
+
+What the flake builds (`flake.nix`):
+
+- Gems from `gemset.nix`, produced by bundix from `Gemfile.lock`. After changing `Gemfile.lock`, regenerate it with `nix run nixpkgs#bundix` and commit it. Native gems are compiled for the `ruby` platform, which is why the lockfile also lists the `ruby` platform and the build sets `BUNDLE_FORCE_RUBY_PLATFORM`.
+- Precompiled assets, inside the store path. Nothing under the application directory is writable at run time, which is why production caches in memory.
+- One executable, `bin/vereinsplaner`, generated from `bin/runtime-start`. It prepares the SQLite database at `$STATE_DIR/production.sqlite` and starts Puma on `127.0.0.1:$PORT`.
+
+Check the build locally with `nix build` (and on `builder` for x86_64-linux) before pushing. The Ruby version in `.ruby-version` must match `ruby_4_0` in the pinned nixpkgs; the flake fails with a clear message otherwise.
+
+Operator settings on the VM (see [self-hosted-sqlite-runbook.md](self-hosted-sqlite-runbook.md)):
+
+| Setting | Value |
+| --- | --- |
+| Secret `RAILS_MASTER_KEY` | `ssh apps runtime env set vereinsplaner --stdin`, from `config/master.key` |
+| Memory limit | 512 MiB (`runtime limits set vereinsplaner --memory 512`); Puma runs one worker with 3 threads at about 130 MB RSS |
+| Hostname | `verein.tfc-leipzig.com`, routed by Caddy on bouncer to `apps.internal:80` |
+
 ## Production with Docker
 
 The `Dockerfile` builds a production image that runs Puma on port 80 as a non-root user. The entrypoint runs `rails db:prepare` on start, so migrations are applied automatically.

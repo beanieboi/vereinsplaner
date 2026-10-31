@@ -38,8 +38,8 @@ bin/ci           # lint, security scans and tests, as run in CI
 
 ## Further documentation
 
-- [docs/installation.md](docs/installation.md): local setup, first user, production deployment
-- [docs/self-hosted-sqlite-runbook.md](docs/self-hosted-sqlite-runbook.md): operating and backing up the production instance
+- [docs/installation.md](docs/installation.md): local setup, first user, production deployment to the runtime (Nix flake, GitHub Actions) or with Docker
+- [docs/self-hosted-sqlite-runbook.md](docs/self-hosted-sqlite-runbook.md): operating, backing up and restoring the production instance
 - [docs/heroku-to-self-hosted-sqlite-plan.md](docs/heroku-to-self-hosted-sqlite-plan.md): migration notes from Heroku and PostgreSQL
 
 ## License

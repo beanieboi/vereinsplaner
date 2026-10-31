@@ -22,7 +22,7 @@ gem "sprockets-rails"
 group :development, :test do
   gem "brakeman", require: false
   gem "bundler-audit", require: false
-  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
+  gem "debug", platforms: %i[mri], require: "debug/prelude"
   gem "rubocop-rails-omakase", require: false
 end
 

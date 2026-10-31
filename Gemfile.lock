@@ -120,6 +120,7 @@ GEM
     drb (2.2.3)
     erb (6.0.7)
     erubi (1.13.1)
+    ffi (1.17.4)
     ffi (1.17.4-aarch64-linux-gnu)
     ffi (1.17.4-arm64-darwin)
     ffi (1.17.4-x86_64-linux-gnu)
@@ -155,6 +156,7 @@ GEM
       net-smtp
     marcel (1.2.1)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
@@ -169,6 +171,9 @@ GEM
     net-smtp (0.5.2)
       net-protocol
     nio4r (2.7.5)
+    nokogiri (1.19.4)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.19.4-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.19.4-arm64-darwin)
@@ -294,6 +299,8 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    sqlite3 (2.10.1)
+      mini_portile2 (~> 2.8.0)
     sqlite3 (2.10.1-aarch64-linux-gnu)
     sqlite3 (2.10.1-arm64-darwin)
     sqlite3 (2.10.1-x86_64-linux-gnu)
@@ -325,6 +332,7 @@ PLATFORMS
   arm64-darwin-23
   arm64-darwin-24
   arm64-darwin-25
+  ruby
   x86_64-linux
 
 DEPENDENCIES
@@ -349,7 +357,7 @@ DEPENDENCIES
   web-console
 
 RUBY VERSION
-  ruby 4.0.7
+  ruby 4.0.9
 
 BUNDLED WITH
   4.0.6

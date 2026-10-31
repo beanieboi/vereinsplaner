@@ -26,6 +26,9 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon
 
+  # Application forms are PDFs; no image variants, so the image_processing gem is not needed.
+  config.active_storage.variant_processor = :disabled
+
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   config.assume_ssl = true
 
@@ -48,8 +51,9 @@ Rails.application.configure do
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
-  # Replace the default in-process memory cache store with a durable alternative.
-  # config.cache_store = :mem_cache_store
+  # The application directory is read-only when deployed, so cache in memory
+  # instead of the default file store under tmp/cache.
+  config.cache_store = :memory_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   # config.active_job.queue_adapter = :resque

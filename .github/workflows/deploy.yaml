@@ -1,0 +1,104 @@
+# Reference deploy workflow for GitHub Actions (ADR 0020).
+#
+# Self-hosted runners on the runtime's network may add RUNTIME_DEPLOY_ENDPOINT
+# with the runtime's internal address; the audience stays the public URL
+# (ADR 0023). GitHub-hosted runners leave it unset.
+# Set the repository variable RUNTIME_DEPLOY_URL to the deploy URL origin the
+# operator gives you (`runtime info`), e.g. https://deploy.example.org. It is
+# a plain variable, not a secret: nothing here is secret. The identity token
+# GitHub issues to this job proves which repository and ref built the closure.
+#
+# The application name defaults to the repository name. The first run of a
+# new repository ends with 403 and a pending request id by design: the
+# operator approves it once (`runtime approve <id> --hostname ...`), then
+# re-runs the job.
+name: deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v16
+
+      - name: Build the default package
+        id: build
+        run: |
+          set -euo pipefail
+          out=$(nix build .#default --no-link --print-out-paths)
+          echo "store_path=$out" >> "$GITHUB_OUTPUT"
+          echo "built $out"
+
+      - name: Export the closure
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/closure
+          nix copy --to 'file:///tmp/closure?compression=zstd' "${{ steps.build.outputs.store_path }}"
+          tar -C /tmp/closure -cf /tmp/closure.tar .
+          ls -l /tmp/closure.tar
+
+      - name: Request an identity token for the runtime
+        id: token
+        run: |
+          set -euo pipefail
+          aud="${{ vars.RUNTIME_DEPLOY_URL }}"
+          aud="${aud%/}"
+          token=$(curl -sSf -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=$aud" | jq -r .value)
+          echo "::add-mask::$token"
+          echo "token=$token" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy
+        env:
+          RUNTIME_APP: ${{ github.event.repository.name }}
+          RUNTIME_TOKEN: ${{ steps.token.outputs.token }}
+          STORE_PATH: ${{ steps.build.outputs.store_path }}
+          # Where to post. Runners on the runtime's own network set
+          # RUNTIME_DEPLOY_ENDPOINT to its internal address (ADR 0023); the
+          # audience above stays the public URL either way.
+          DEPLOY_ENDPOINT: ${{ vars.RUNTIME_DEPLOY_ENDPOINT || vars.RUNTIME_DEPLOY_URL }}
+        run: |
+          set -uo pipefail
+          status=$(curl -sS -o /tmp/response.json -w '%{http_code}' \
+            -X POST "${DEPLOY_ENDPOINT%/}/deploy" \
+            -H "Authorization: Bearer $RUNTIME_TOKEN" \
+            -H "Runtime-App: $RUNTIME_APP" \
+            -H "Runtime-Store-Path: $STORE_PATH" \
+            -H "Content-Type: application/x-tar" \
+            -H "Expect: 100-continue" \
+            --max-time 660 \
+            --data-binary @/tmp/closure.tar)
+          echo "HTTP $status"
+          jq . /tmp/response.json || cat /tmp/response.json
+          case "$status" in
+            200)
+              echo "deployed $RUNTIME_APP generation $(jq -r .generation /tmp/response.json) (noop=$(jq -r .noop /tmp/response.json))"
+              ;;
+            403)
+              echo "::error::not authorised: pending request $(jq -r .pending_id /tmp/response.json); operator: $(jq -r .next /tmp/response.json)"
+              exit 1
+              ;;
+            500)
+              echo "::error::$(jq -r .code /tmp/response.json): $(jq -r .message /tmp/response.json)"
+              echo "--- application log ---"
+              jq -r '.log[]?' /tmp/response.json
+              exit 1
+              ;;
+            *)
+              echo "::error::$(jq -r .code /tmp/response.json 2>/dev/null): $(jq -r .message /tmp/response.json 2>/dev/null)"
+              exit 1
+              ;;
+          esac

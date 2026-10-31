@@ -1,41 +1,50 @@
 # Self-hosted SQLite runbook
 
-## Coolify configuration
+Production runs as the application `vereinsplaner` on the runtime (`ssh apps runtime --help`). The runtime starts one process with `RAILS_ENV=production`, the SQLite database at `$STATE_DIR/production.sqlite` (`/var/lib/runtime-apps/vereinsplaner`), and `RAILS_MASTER_KEY` from its secrets. Never run a second copy against the same database file.
 
-- Run a single app container with `RAILS_ENV=production`.
-- Mount persistent storage at `/app/storage`.
-- Set `DATABASE_URL=sqlite3:/app/storage/production.sqlite3`.
-- Set `RAILS_MASTER_KEY` and `SECRET_KEY_BASE` as Coolify secrets.
-- Keep `WEB_CONCURRENCY` unset or set to `1`; do not run multiple replicas against the same SQLite file.
-- Configure the existing S3 Active Storage credentials. Current production uses S3 via `config.active_storage.service = :amazon`.
+Uploaded application forms are not in the database: every Active Storage blob lives in the S3 bucket `vereinsplaner-production` (`eu-central-1`). The S3 credentials are in `config/credentials.yml.enc`, so `RAILS_MASTER_KEY` is the only secret the runtime needs.
 
-Run migrations against the mounted database file before Puma starts.
+## Operating
+
+```sh
+ssh apps runtime status vereinsplaner
+ssh apps runtime logs vereinsplaner -n 200
+ssh apps runtime diagnose verein.tfc-leipzig.com
+ssh apps runtime generations vereinsplaner
+ssh apps runtime rollback vereinsplaner        # previous generation, no CI needed
+ssh apps runtime restart vereinsplaner
+```
+
+A deploy that does not start within 10 seconds is reverted automatically. Migrations run on start (`rails db:prepare` in `bin/runtime-start`) and count against that budget; the current boot takes about 1.5 seconds.
 
 ## Backup
 
-There is not yet a `script/backup_sqlite` helper in the repo. Until one is added, run the backup command from the app container or a one-off Coolify command:
+The state directory streams out as a gzip tar (ADR 0024). Stop the application first for a consistent SQLite snapshot:
 
 ```sh
-mkdir -p /app/storage/backups
-sqlite3 /app/storage/production.sqlite3 ".backup '/app/storage/backups/vereinsplaner.sqlite3'"
-tar -C /app/storage/backups -czf /app/storage/backups/vereinsplaner.sqlite3.tar.gz vereinsplaner.sqlite3
-gpg --symmetric --cipher-algo AES256 /app/storage/backups/vereinsplaner.sqlite3.tar.gz
+ssh apps runtime stop vereinsplaner
+ssh apps runtime state-dir export vereinsplaner production.sqlite > vereinsplaner-$(date +%F).tar.gz
+ssh apps runtime start vereinsplaner
 ```
 
-Copy the generated `*.gpg` archive off-server after the command completes.
+Keep the archive encrypted and off the VM; it contains member data. Back up separately: the S3 bucket, `config/master.key`, and the runtime settings (`env list`, `limits show`, hostnames), which are small enough to recreate by hand.
 
-Back up these separately:
+## Restore
 
-- S3 bucket used for application forms
-- `RAILS_MASTER_KEY`
-- Coolify secrets and environment variables
-- deployment configuration
+The archive's paths are relative to `STATE_DIR`, so an export imports to the same place. The application must exist and be stopped:
+
+```sh
+ssh apps runtime stop vereinsplaner
+ssh apps runtime state-dir import vereinsplaner --yes --replace < vereinsplaner-YYYY-MM-DD.tar.gz
+ssh apps runtime start vereinsplaner
+```
+
+Without `--yes` the import only summarises what it would do. To restore a backup from the old Coolify volume, extract `production.sqlite` from it and repack it alone: `tar -czf state.tar.gz production.sqlite`.
 
 ## Restore check
 
-Before trusting backups:
+Before trusting a backup, run it against a copy:
 
-1. Copy a backup to a temporary restore path.
-2. Decrypt and extract it.
-3. Boot a one-off app container against the restored SQLite file.
-4. Verify login, member list, member show, payment list, and application-form download.
+1. Extract `production.sqlite` from the archive into an empty directory and run `sqlite3 production.sqlite "PRAGMA integrity_check"`.
+2. Boot the app against the copy: `RAILS_ENV=production DATABASE_URL=sqlite3:/path/to/production.sqlite bin/rails runner 'puts Member.count'`, with `config/master.key` in place.
+3. For a full check, build the flake and start it as the runtime would: `PORT=3001 STATE_DIR=/path/to/dir TMPDIR=/tmp RAILS_MASTER_KEY=... ./result/bin/vereinsplaner`, then verify login, member list, member show, payment list, and an application-form download.
