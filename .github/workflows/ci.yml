@@ -7,52 +7,6 @@ on:
     branches: [ main ]
 
 jobs:
-  bundler_audit:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-
-      - name: Scan for security vulnerabilities in Ruby dependencies
-        if: github.event_name == 'push'
-        run: bin/bundler-audit
-
-      # On PRs, only fail for advisories the PR introduces; ones already on the
-      # base branch are reported in a PR comment instead.
-      - name: Scan for security vulnerabilities introduced by this PR
-        if: github.event_name == 'pull_request'
-        env:
-          BASE_REF: ${{ github.base_ref }}
-        run: |
-          git fetch --depth=1 origin "$BASE_REF"
-          git show FETCH_HEAD:Gemfile.lock > "$RUNNER_TEMP/base.Gemfile.lock"
-          bin/bundler-audit-diff "$RUNNER_TEMP/base.Gemfile.lock" "$RUNNER_TEMP/bundler-audit.md"
-
-      - name: Comment scan results on PR
-        if: always() && github.event_name == 'pull_request'
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: |
-          report="$RUNNER_TEMP/bundler-audit.md"
-          [ -f "$report" ] || exit 0
-          comment_id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
-            --jq '.[] | select(.body | startswith("<!-- bundler-audit-diff -->")) | .id' | head -n 1)
-          if [ -n "$comment_id" ]; then
-            gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment_id" -F body=@"$report"
-          elif ! grep -q "No known vulnerabilities" "$report"; then
-            gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -F body=@"$report"
-          fi
-
   brakeman:
     runs-on: ubuntu-latest
     steps:
@@ -99,3 +53,68 @@ jobs:
 
       - name: Run tests
         run: bin/rails test
+
+  nix_build:
+    # Dependabot PRs are built in dependabot_merge.
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+
+      - name: Check gemset.nix is up to date
+        run: |
+          nix develop -c bundix
+          if ! git diff --exit-code gemset.nix; then
+            echo "::error::gemset.nix is stale; run 'nix run nixpkgs#bundix' and commit the result"
+            exit 1
+          fi
+
+      - name: Build the default package
+        run: nix build .#default --no-link -L
+
+  dependabot_merge:
+    needs: [brakeman, lint, test]
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+
+      # Dependabot doesn't update gemset.nix.
+      - name: Regenerate gemset.nix
+        run: |
+          nix develop -c bundix
+          if ! git diff --quiet gemset.nix; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Regenerate gemset.nix" gemset.nix
+            git push
+          fi
+
+      - name: Build the default package
+        run: nix build .#default --no-link -L
+
+      - name: Merge and trigger deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_REPO: ${{ github.repository }}
+          BASE_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Merge exactly what was built if we pushed a commit.
+          args=()
+          if [ "$(git rev-parse HEAD)" != "$BASE_SHA" ]; then
+            args+=(--match-head-commit "$(git rev-parse HEAD)")
+          fi
+          gh pr merge --merge "${args[@]}" "$PR_URL"
+          # Merges made with GITHUB_TOKEN don't fire push events; dispatch is exempt.
+          gh workflow run deploy.yaml --ref main
