@@ -5,6 +5,10 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  # dependabot_merge re-runs CI on a Dependabot branch after pushing gemset.nix:
+  # pushes made with GITHUB_TOKEN don't start runs, and the ruleset needs lint
+  # and test on the new head.
+  workflow_dispatch:
 
 jobs:
   brakeman:
@@ -56,7 +60,7 @@ jobs:
 
   nix_build:
     # Dependabot PRs are built in dependabot_merge.
-    if: github.actor != 'dependabot[bot]'
+    if: github.actor != 'dependabot[bot]' && github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -76,21 +80,29 @@ jobs:
 
   dependabot_merge:
     needs: [brakeman, lint, test]
-    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    if: >-
+      (github.event_name == 'pull_request' && github.actor == 'dependabot[bot]') ||
+      (github.event_name == 'workflow_dispatch' && startsWith(github.ref_name, 'dependabot/'))
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
       actions: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      BRANCH: ${{ github.head_ref || github.ref_name }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ env.BRANCH }}
 
       - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
 
-      # Dependabot doesn't update gemset.nix.
+      # Dependabot doesn't update gemset.nix. If it is stale, push the fix and
+      # re-run CI on the new head; that run merges.
       - name: Regenerate gemset.nix
+        id: gemset
         run: |
           nix develop -c bundix
           if ! git diff --quiet gemset.nix; then
@@ -98,23 +110,17 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git commit -m "Regenerate gemset.nix" gemset.nix
             git push
+            gh workflow run ci.yml --ref "$BRANCH"
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Build the default package
+        if: steps.gemset.outputs.pushed != 'true'
         run: nix build .#default --no-link -L
 
       - name: Merge and trigger deploy
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_REPO: ${{ github.repository }}
-          BASE_SHA: ${{ github.event.pull_request.head.sha }}
+        if: steps.gemset.outputs.pushed != 'true'
         run: |
-          # Merge exactly what was built if we pushed a commit.
-          args=()
-          if [ "$(git rev-parse HEAD)" != "$BASE_SHA" ]; then
-            args+=(--match-head-commit "$(git rev-parse HEAD)")
-          fi
-          gh pr merge --merge "${args[@]}" "$PR_URL"
+          gh pr merge --merge --match-head-commit "$(git rev-parse HEAD)" "$BRANCH"
           # Merges made with GITHUB_TOKEN don't fire push events; dispatch is exempt.
           gh workflow run deploy.yaml --ref main
