@@ -531,10 +531,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "062r891hxis58j5q735kk9sj5srxx0rv813f8m95bilsjm3gf1r0";
+      sha256 = "0p0qn2srqbak6x75qp2igv0bfcijb46m6q7m1pl7sancy3p18psl";
       type = "gem";
     };
-    version = "2.25.2";
+    version = "2.25.3";
   };
   mail = {
     dependencies = ["logger" "mini_mime" "net-imap" "net-pop" "net-smtp"];
@@ -658,10 +658,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1d9safb4dly6qmc2g06444l0zifby52yy6j1a5fa1g4j3ihm3jah";
+      sha256 = "1f4jz6yhzj7i8gl2zif4pld2plxalkf6pcbp4y3qzcacql3lbsdb";
       type = "gem";
     };
-    version = "1.19.4";
+    version = "1.19.7";
   };
   paper_trail = {
     dependencies = ["activerecord" "request_store"];
