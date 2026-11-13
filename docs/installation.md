@@ -75,7 +75,7 @@ Production runs on the runtime (the `apps` VM behind `deploy.abwesend.com`). Eve
 
 What the flake builds (`flake.nix`):
 
-- Gems from `gemset.nix`, produced by bundix from `Gemfile.lock`. After changing `Gemfile.lock`, regenerate it with `nix run nixpkgs#bundix` and commit it. Native gems are compiled for the `ruby` platform, which is why the lockfile also lists the `ruby` platform and the build sets `BUNDLE_FORCE_RUBY_PLATFORM`.
+- Gems from `gemset.nix`, produced by bundix from `Gemfile.lock`. CI and the deploy regenerate it before every build, so the committed copy may lag behind `Gemfile.lock` (Renovate doesn't update it). Before a local `nix build`, run `nix run --inputs-from . nixpkgs#bundix`; committing the result is optional. Native gems are compiled for the `ruby` platform, which is why the lockfile also lists the `ruby` platform and the build sets `BUNDLE_FORCE_RUBY_PLATFORM`.
 - Precompiled assets, inside the store path. Nothing under the application directory is writable at run time, which is why production caches in memory.
 - One executable, `bin/vereinsplaner`, generated from `bin/runtime-start`. It prepares the SQLite database at `$STATE_DIR/production.sqlite` and starts Puma on `127.0.0.1:$PORT`.
 

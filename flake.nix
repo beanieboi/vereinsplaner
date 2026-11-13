@@ -25,8 +25,9 @@
           lib = pkgs.lib;
           rubyVersion = lib.trim (builtins.readFile ./.ruby-version);
 
-          # Gems come from gemset.nix (regenerate with `nix run nixpkgs#bundix`
-          # after changing Gemfile.lock). Native gems are built for the "ruby"
+          # Gems come from gemset.nix, which CI regenerates from Gemfile.lock
+          # before every build (`nix run --inputs-from . nixpkgs#bundix`); run
+          # the same locally before `nix build`. Native gems are built for the "ruby"
           # platform, so Bundler must not look for the precompiled variants.
           # Bundler reads the Gemfile from the store, where .ruby-version is not
           # next to it, so the requirement is inlined.

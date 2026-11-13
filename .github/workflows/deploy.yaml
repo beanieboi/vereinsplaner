@@ -35,6 +35,11 @@ jobs:
 
       - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
 
+      # gemset.nix is generated from Gemfile.lock at build time; the committed
+      # copy may lag (Renovate doesn't update it).
+      - name: Generate gemset.nix
+        run: nix run --inputs-from . nixpkgs#bundix
+
       - name: Build the default package
         id: build
         run: |
