@@ -6,7 +6,7 @@ workflows:
     '.github/workflows/ci.yml':
         - 'actions/checkout@v7.0.1'
         - 'determinatesystems/nix-installer-action@v23'
-        - 'ruby/setup-ruby@v1.338.0'
+        - 'ruby/setup-ruby@v1.341.0'
     '.github/workflows/deploy.yaml':
         - 'actions/checkout@v7.0.1'
         - 'determinatesystems/nix-installer-action@v23'
@@ -21,8 +21,8 @@ dependencies:
         commit: 'sha1-3138316df39ed29be04236d7ffc686fa525866aa'
         owner_id: 80991770
         repo_id: 588678074
-    'ruby/setup-ruby@v1.338.0':
-        ref: 'v1.338.0'
-        commit: 'sha1-b3aaceaef7e0ee231b499e7b5f49c03fc1d32199'
+    'ruby/setup-ruby@v1.341.0':
+        ref: 'v1.341.0'
+        commit: 'sha1-20eb24b0d509e2b9ed9b6d42ddfeb992915e0564'
         owner_id: 210414
         repo_id: 231208785
